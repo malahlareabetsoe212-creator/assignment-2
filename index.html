@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+
+	body{
+	background-image:url('cover.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	}
+	
+	p{
+	font-size: 20px;
+	}
+	.nav-links{
+    justify-content:space-between;
+    text-align: right;
+    background-color:lightblue;
+    padding: 30px 48px; 
+    width:95%; 
+    margin-left: -10px;
+    margin-top: -10px;
+	}
+	.header{
+		font-size: 60px;
+		text-align: center;
+		font-style:italic;
+		margin-top: 50px;
+		color:ghostwhite ;
+	}
+	.paragraph{
+		color: ghostwhite;
+		text-align: center;
+		font-style:italic;
+	}
+	.footer{
+		background-color:lightblue;
+		width:101%;
+		height:80px;
+		margin-top:208px;
+    margin-left:-10px;
+		text-align: center;
+		color: brown;
+  }
+	.dark-mode{
+	  background-color: black;
+		color: white;
+		margin-left:-100px ;
+  }
+  .previous{
+    font-size: 15px;
+    color: black;
+  }
+  .next{
+  	font-size: 15px;
+    color: black;
+  }
+  .nav-links{
+	  background-color:lightblue;
+		height: 50px;
+		text-align: center;
+		color: brown;
+		margin-top: -20px;
+	}
+
+	</style>
+</head>
+
+<nav class="navbar">
+	<div class="nav-links">
+<button><a href="about.html">About</a></button>
+<button><a href="services.html">Services</a></button>
+<button><a href="gallery.html">Gallery</a></button>
+<button><a href="contact.html">Contact</a></button>
+
+<button onclick="myFunction()">Dark/Light mode</button>
+
+</div>
+
+
+
+</nav>
+
+<header class="header"> WELCOME TO LESOTHO</header>
+
+<body>
+
+    <div class="paragraph">
+      <p style="font-size:40px;"> It is</p>
+      <p style="font-size:40px;"> Time To</p>   
+      <p style="font-size:40px;">Explore</p>
+    </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <form class="form" id="pageSearchForm" autocomplete="off">
+        <input type="text" id="pageSearchInput" placeholder="Search pages.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <div id="suggestions" class="list-group position-absolute"></div>
+      <p id="noResults" style="display:none;">No pages found.</p>
+    </div>
+  </div>
+</div>
+<script>
+	
+function myFunction() {
+     var element = document.body;
+      element.classList.toggle("dark-mode");
+      }
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+  
+  const pages = [
+    { name: "Home", url: "home.html", keywords: "home start main welcome" },
+    { name: "About", url: "about.html", keywords: "about us info history" },
+    { name: "Gallery", url: "gallery.html", keywords: "gallery photos images pictures" },
+    { name: "Services", url: "services.html", keywords: "services tours offers" },
+    { name: "Contact", url: "contact.html", keywords: "contact email phone address" }
+  ];
+
+  const form = document.getElementById("pageSearchForm");
+  const input = document.getElementById("pageSearchInput");
+  const suggestions = document.getElementById("suggestions");
+  const noResults = document.getElementById("noResults");
+
+  input.addEventListener("input", function () {
+
+    let searchText = input.value.toLowerCase().trim();
+
+    suggestions.innerHTML = "";
+    noResults.style.display = "none";
+
+    for (let i = 0; i < pages.length; i++) {
+
+      let pageText =
+        (pages[i].name + " " + pages[i].keywords).toLowerCase();
+
+     
+      if (searchText !== "" && pageText.includes(searchText)) {
+
+        let link = document.createElement("a");
+        link.href = pages[i].url;
+        link.className = "list-group-item list-group-item-action";
+        link.textContent = pages[i].name;
+
+        suggestions.appendChild(link);
+      }
+    }
+  });
+
+  form.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    let searchText = input.value.toLowerCase().trim();
+    let pageFound = false;
+
+    
+    for (let i = 0; i < pages.length; i++) {
+
+      let pageText =
+        (pages[i].name + " " + pages[i].keywords).toLowerCase();
+
+      if (pageText.includes(searchText)) {
+        pageFound = true;
+
+        window.location.href = pages[i].url;
+        break;
+      }
+    }
+
+    if (!pageFound) {
+      suggestions.innerHTML = "";
+      noResults.style.display = "block";
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+
+    if (
+      !form.contains(event.target) &&
+      !suggestions.contains(event.target)
+    ) {
+      suggestions.innerHTML = "";
+    }
+  });
+
+});
+</script>
+ 
+</body>
+
+<footer class="footer">
+	<p>©Visit Lesotho. Kingdom in the Sky.</p>
+</footer>
+
+</html>
